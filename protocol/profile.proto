@@ -1,0 +1,382 @@
+syntax = "proto3";
+
+package inpower_profile;
+
+service ProfileService {
+    rpc GetProfile (GetProfileRequest) returns (GetProfileResponse);
+    rpc GetProfiles (GetProfilesRequest) returns (GetProfilesResponse);
+    rpc CreateProfile (CreateProfileRequest) returns (CreateProfileResponse);
+    rpc EditProfile (EditProfileRequest) returns (EditProfileResponse);
+    
+    rpc UpdateReactions (UpdateReactionsRequest) returns (UpdateReactionsResponse);
+    rpc GetUsersReacts(GetUsersReactsRequest) returns (GetUsersReactsResponse);
+
+    rpc GetImpacting(GetImpactingRequest) returns (GetImpactingResponse);
+    rpc GetInspired(GetInspiredRequest) returns (GetInspiredResponse);
+    
+    rpc FollowProfile (FollowProfileRequest) returns (FollowProfileResponse);
+    rpc UnFollowProfile (FollowProfileRequest) returns (FollowProfileResponse);
+
+    rpc SavePost (SavePostRequest) returns (SavePostResponse);
+
+    rpc GetUsersSavedPosts (SavedPostsRequest) returns (SavedPostsResponse);
+
+    rpc BlockUser (BlockUserRequest) returns (BlockUserResponse);
+
+    rpc CheckUserBlockedOrNot (CheckBlockedUserRequest) returns (CheckBlockedUserResponse);
+
+    rpc CheckUsersRelationship (CheckUsersRelationshipRequest) returns (CheckUsersRelationshipResponse);
+
+    rpc CheckUsersConnectedOrNot (CheckUserConnectedRequest) returns (CheckUserConnectedResponse);
+
+    rpc GetUserBlockedUsers (BlockedUsersRequest) returns (BlockedUsersResponse);
+
+    rpc GetUsersList (UsersListRequest) returns (UsersListResponse);
+}
+
+message GetUsersReactsRequest{
+    string profile_id = 1;
+    string post_id = 2;
+}
+message GetUsersReactsResponse{
+    Reaction reaction = 1
+}
+message UpdateReactionsRequest{
+    string id = 1;
+    string postid = 2;
+    string type = 3;
+}
+
+message UpdateReactionsResponse{
+    Reaction reaction = 1
+}
+
+message Reaction {
+    string profile_id = 1;
+    string post_id = 2;
+    string type = 3;
+}
+
+message GetImpactingRequest {
+    string id = 1;
+}
+
+message GetImpactingResponse {
+        repeated Profile profiles = 1;
+}
+
+// 
+message GetInspiredRequest {
+    string id = 1;
+}
+
+message GetInspiredResponse {
+        repeated Profile profiles = 1;
+}
+
+message GetProfileRequest {
+    string id = 1;
+    string auth_id = 2;
+}
+
+
+message GetProfileResponse {
+     Profile profile = 1;
+}
+
+
+message GetProfilesRequest {
+   repeated ProfileRequest profiles = 1;
+}
+
+
+message GetProfilesResponse {
+     repeated Profile profiles = 1;
+}
+
+
+
+message CreateProfileRequest {
+    string username = 1;
+    string fullname = 2;
+    string invite_code = 3;
+    string email = 4;
+    string phone = 5;
+    string type = 6;
+    string visibility = 7;
+    string profile_photo = 8;
+    string auth_id = 9;
+    string bio = 10;
+    string country_id = 11;
+    string selfie_img = 12;
+    string pronoun = 13;
+    string selfie_approval = 14;
+    string pronoun_visibility = 15;
+
+
+}
+
+message CreateProfileResponse {
+    Profile profile = 1;
+}
+
+message EditProfileRequest {
+    string id = 1;
+    string fullname = 2;
+    string invite_code = 3;
+    string email = 4;
+    string phone = 5;
+    string type = 6;
+    string visibility = 7;
+    string profile_photo = 8;
+    string auth_id = 9;
+    string bio = 10;
+    string username = 11;
+    string country_id = 12;
+    string selfie_img = 13;
+    string pronoun = 14;
+    string selfie_approval = 15;
+     string pronoun_visibility = 16;
+
+
+}
+
+message EditProfileResponse {
+    EditProfile profile = 1;
+}
+
+// 
+message ProfileRequest {
+    string user_id = 1;
+}
+
+message EditProfile {
+    string id = 1;
+    string fullname = 2;
+    string invite_code = 3;
+    string email = 4;
+    string phone = 5;
+    string type = 6;
+    string visibility = 7;
+    string profile_photo = 8;
+    string auth_id = 9;
+    string bio = 10;
+    string username = 11;
+    bool followed = 12;
+    int32 impacting_count = 13;
+    int32 inspired_count = 14;
+    string selfie_img = 15;
+    string pronoun = 16;
+    Country country = 17;
+    repeated string saved_posts = 18;
+    repeated string blocked_users = 19;
+    string selfie_approval = 20;
+     string pronoun_visibility = 21;
+}
+
+message Profile {
+    string id = 1;
+    string fullname = 2;
+    string invite_code = 3;
+    string email = 4;
+    string phone = 5;
+    string type = 6;
+    string visibility = 7;
+    string profile_photo = 8;
+    string auth_id = 9;
+    string bio = 10;
+    string username = 11;
+    bool followed = 12;
+    int32 impacting_count = 13;
+    int32 inspired_count = 14;
+    string selfie_img = 15;
+    string pronoun = 16;
+    Country country = 17;
+    repeated Post saved_posts = 18;
+    repeated string blocked_users = 19;
+    string selfie_approval = 20;
+     string pronoun_visibility = 21;
+}
+
+// following 
+message FollowProfileRequest {
+    string profile_id = 1;
+    string follow_id = 2;
+}
+
+message FollowProfileResponse {
+     Follow follow = 1;
+}
+
+message Follow {
+    string id = 1;
+    string profile_id = 2;
+    string follow_id = 3;
+    string status = 4;
+}
+
+message Country {
+    string id = 1;
+    string name = 2;
+}
+
+message SavePostRequest {
+    string post_id = 1;
+    string user_id = 2;
+}
+
+message SavePostResponse {
+    string status = 1;
+}
+
+message SavedPostsRequest {
+    int32 page_no = 1;
+    int32 per_page = 2;
+    string user_id = 3;
+}
+
+message SavedPostsResponse {
+    SavedPostResponsePaged saved_posts = 1;
+}
+
+message SavedPostResponsePaged {
+    int32 first_page = 1;
+    bool has_next = 2;
+    bool has_prev = 3;
+    Profile list = 4;
+    int32 next_page = 5;
+    int32 page = 6;
+    int32 prev_page = 7;
+}
+
+message Post {
+    bool active = 1;
+    bool anonymous = 2;
+    string content = 3;
+    repeated string group_id = 4;
+    string id = 5;
+    string user_id = 6;
+    repeated MediaResponse media = 7;
+    PollsResponse polls = 8;
+    bool sensitive = 9;
+    string title = 10;
+    string updated_at = 11;
+    string inserted_at = 12;
+    // google.protobuf.Timestamp inserted_at = 11;
+    // google.protobuf.Timestamp updated_at = 12;
+}
+
+message MediaResponse {
+    string id = 1;
+    string src = 2;
+    int32 order = 3;
+    string caption = 4;
+    bool active = 5;
+    string post_id = 6;
+    string height = 7;
+    string width = 8;
+    // google.protobuf.Timestamp inserted_at = 7;
+    // google.protobuf.Timestamp updated_at = 8;
+}
+
+
+message PollsResponse {
+    bool active = 1;
+    string id = 2;
+    repeated PollOptionsResponse poll_options = 3;
+    string post_id = 4;
+    string summary = 5;
+    string title = 6;
+}
+
+message PollOptionsResponse {
+    bool active = 1;
+    string context = 2;
+    string id = 3;
+    string polls_id = 4;
+    repeated PollVotesResponse poll_votes = 5;
+}
+
+message PollVotesResponse {
+    string id = 1;
+    bool active = 2;
+    string user_id = 3;
+    string context = 4;
+    string poll_options_id = 5;
+}
+
+message CheckBlockedUserRequest {
+    string user_id = 1;
+    string block_user_id = 2;
+}
+
+message CheckBlockedUserResponse {
+    bool status = 1;
+}
+
+message CheckUserConnectedRequest {
+    string user_id = 1;
+    string follower_user_id = 2;
+}
+
+message CheckUserConnectedResponse {
+    bool status = 1;
+}
+
+message CheckUsersRelationshipRequest {
+    string my_user_id = 1;
+    string other_user_id = 2;
+}
+
+message CheckUsersRelationshipResponse {
+    bool is_connected = 1;
+    bool is_blocked = 2;
+}
+
+message BlockUserRequest {
+    string user_id = 1;
+    string block_user_id = 2;
+}
+
+message BlockUserResponse {
+    string status = 1;
+}
+
+message BlockedUsersRequest {
+    int32 page_no = 1;
+    int32 per_page = 2;
+    string user_id = 3;
+}
+
+message BlockedUsersResponse {
+    BlockedUsersResponsePaged blocked_users = 1;
+}
+
+message BlockedUsersResponsePaged {
+    int32 first_page = 1;
+    bool has_next = 2;
+    bool has_prev = 3;
+    int32 next_page = 4;
+    int32 page = 5;
+    int32 prev_page = 6;
+    repeated Profile list = 7;
+}
+
+message UsersListRequest {
+    int32 page_no = 1;
+    int32 per_page = 2;
+}
+
+message UsersListResponse {
+    UsersListResponsePaged users_list = 1;
+}
+
+message UsersListResponsePaged {
+    int32 first_page = 1;
+    bool has_next = 2;
+    bool has_prev = 3;
+    int32 next_page = 4;
+    int32 page = 5;
+    int32 prev_page = 6;
+    repeated Profile profiles_list = 7;
+}
