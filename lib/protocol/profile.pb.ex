@@ -309,7 +309,7 @@ defmodule InpowerProfile.Reaction do
   @type t :: %__MODULE__{
                profile_id: String.t(),
                post_id: String.t(),
-               type: String.t()
+               type: [String.t()]
              }
 
   defstruct [
@@ -320,7 +320,7 @@ defmodule InpowerProfile.Reaction do
 
   field :profile_id, 1, type: :string
   field :post_id, 2, type: :string
-  field :type, 3, type: :string
+  field :type, 3, repeated: true, type: :string
 end
 
 defmodule InpowerProfile.EditProfileResponse do
